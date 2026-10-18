@@ -1,0 +1,3 @@
+Thư mục này chứa tài nguyên của website.
+Thêm video nền tên background.mp4 và nhạc nền tên music.mp3 vào đây.
+Bạn cũng có thể thêm ảnh, ví dụ anh-1.jpg, anh-2.jpg, anh-3.jpg rồi sửa đường dẫn trong index.html.
