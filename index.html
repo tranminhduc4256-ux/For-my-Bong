@@ -162,6 +162,14 @@
     .letter-line.visible { opacity: 1; transform: translateY(0); }
 
     .closing { text-align: center; padding: 85px 22px 65px; }
+
+/* Khoảng trống cuối trang */
+.final-empty-space {
+  height: 100vh;
+  min-height: 600px;
+  width: 100%;
+  background: transparent;
+}
     .big-heart {
       color: #ff577e; font-size: 3rem; display: inline-block;
       animation: beat 1.2s infinite;
@@ -352,6 +360,11 @@
         animation-iteration-count: 1 !important; transition-duration: .01ms !important;
       }
     }
+footer strong {
+    font-family: "Dancing Script", cursive;
+    font-size: 18px;
+    font-weight: 600;
+}
   </style>
 </head>
 <body>
@@ -380,7 +393,7 @@
         <div class="envelope-seal">♡</div>
       </div>
       <div class="eyebrow">A little place for us</div>
-      <h2 class="rose-title" id="introTitle">Dành riêng cho cục bông nhỏ của tớ</h2>
+      <h2 class="rose-title" id="introTitle">Gửi tới cục bông nhỏ của tớ</h2>
       <p>Có một điều nhỏ tớ muốn gửi đến cậu. Hãy bật âm thanh, rồi cùng tớ mở ra nhé.</p>
       <button class="start-button" id="startButton" type="button">Nghe bò nói nè ♡</button>
     </div>
@@ -428,7 +441,7 @@
           <canvas id="starCanvas" aria-label="Bầu trời sao tương tác. Chạm vào các ngôi sao để tạo ánh sáng."></canvas>
           <div class="sky-caption">
             <strong>Somewhere, it's always you.</strong>
-            <span>Chạm để những vì sao thức giấc ♡</span>
+            <span>Chạm nhẹ để những vì sao thức giấc ♡</span>
           </div>
         </div>
       </div>
@@ -459,7 +472,7 @@
       <div class="secret-card fade-in">
         <div class="section-label">One little question</div>
         <h2 class="rose-title" id="secretTitle">Này cục bông…</h2>
-        <p>Cậu có muốn cùng tớ viết tiếp câu chuyện nhỏ này, bằng thật nhiều ngày bình thường nhưng hạnh phúc không?</p>
+        <p>Cậu có muốn cùng tớ viết tiếp câu chuyện này, bằng thật nhiều ngày bình thường nhưng hạnh phúc không?</p>
         <div class="secret-actions">
           <button class="secret-button" id="yesButton" type="button">Tớ đồng ý ♡</button>
           <button class="secret-button secondary" id="hugButton" type="button">Cho tớ ôm cậu trước đã 🫂</button>
@@ -468,9 +481,9 @@
       </div>
     </section>
   </main>
-
-  <footer>MADE WITH LOVE · JUST FOR YOU ♡</footer>
-
+  <!-- Khoảng trời cuối trang: chỉ có video nền và trái tim rơi -->
+  <div class="final-empty-space" aria-hidden="true"></div>
+  <footer><strong>TO THE WORLD YOU MAY BE ONE PERSON, BUT TO ME YOU ARE THE WORLD. ♡</strong></footer>
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Ảnh kỷ niệm phóng to" aria-hidden="true">
     <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Đóng ảnh">×</button>
     <div class="lightbox-content">
