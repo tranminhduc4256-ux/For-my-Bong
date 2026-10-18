@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17070d">
-  <meta name="description" content="Một góc nhỏ dành riêng cho chúng ta.">
+  <meta name="description" content="Một góc nhỏ, dành riêng cho chúng mình.">
   <title>Gửi cục bông nhỏ màu xanh ♡</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,10 +50,26 @@
       content: ""; position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(15,3,9,.32), rgba(15,3,9,.65));
     }
+    #universeCanvas {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      z-index: -2; pointer-events: none; opacity: .9;
+    }
     #heartCanvas {
       position: fixed; inset: 0; width: 100%; height: 100%;
       z-index: -1; pointer-events: none;
     }
+    .scroll-progress {
+      position: fixed; z-index: 60; inset: 0 0 auto; height: 2px;
+      background: rgba(255,255,255,.05); pointer-events: none;
+    }
+    .scroll-progress span {
+      display: block; width: 0; height: 100%;
+      background: linear-gradient(90deg, #a82c52, #ff7897, #ffe4ec);
+      box-shadow: 0 0 12px rgba(255,120,151,.65);
+      transform-origin: left center;
+    }
+    body::selection { background: rgba(255,120,151,.35); color: #fff; }
+    ::selection { background: rgba(255,120,151,.35); color: #fff; }
 
     .music-toggle {
       position: fixed; z-index: 12; top: 18px; right: 18px;
@@ -339,6 +355,67 @@
       100% { opacity: 0; transform: translate(var(--dx),var(--dy)) scale(1.3) rotate(100deg); }
     }
 
+    /* Lớp hoàn thiện điện ảnh: ánh sáng viền, chiều sâu và chuyển động dịu */
+    .hero::before {
+      content: ""; position: absolute; width: min(70vw, 760px); aspect-ratio: 1;
+      border-radius: 50%; pointer-events: none; z-index: -1;
+      background: radial-gradient(circle, rgba(255,83,132,.10), rgba(255,83,132,.025) 42%, transparent 70%);
+      filter: blur(8px); animation: haloBreathe 7s ease-in-out infinite;
+    }
+    .hero-inner { position: relative; }
+    .eyebrow { text-shadow: 0 0 18px rgba(255,140,175,.22); }
+    h1 { text-wrap: balance; }
+    h1 em { text-shadow: 0 0 34px rgba(255,95,145,.24); }
+    .start-button, .secret-button { position: relative; overflow: hidden; isolation: isolate; }
+    .start-button::before, .secret-button::before {
+      content: ""; position: absolute; z-index: -1; top: -80%; left: -35%;
+      width: 24%; height: 260%; transform: rotate(24deg) translateX(-240%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.23), transparent);
+      transition: transform .8s ease;
+    }
+    .start-button:hover::before, .secret-button:hover::before { transform: rotate(24deg) translateX(700%); }
+    section { position: relative; }
+    section:not(.sky-section)::before {
+      content: ""; position: absolute; top: 0; left: 50%; width: min(74%, 620px); height: 1px;
+      transform: translateX(-50%); background: linear-gradient(90deg, transparent, rgba(255,177,201,.13), transparent);
+    }
+    .photo-card { overflow: hidden; }
+    .photo-card::after {
+      content: "♡"; position: absolute; top: 17px; right: 17px; width: 31px; height: 31px;
+      display: grid; place-items: center; border-radius: 50%; color: #fff6f0;
+      background: rgba(93,16,39,.7); font-size: 18px; opacity: 0; transform: scale(.7) rotate(-15deg);
+      transition: opacity .3s ease, transform .35s var(--ease); pointer-events: none;
+    }
+    .photo-card:hover::after, .photo-card:focus-visible::after { opacity: 1; transform: scale(1) rotate(0); }
+    .letter-wrap { position: relative; overflow: hidden; }
+    .letter-wrap::before {
+      content: "♡"; position: absolute; top: 12px; right: 20px; color: rgba(255,120,151,.18);
+      font: 54px "Dancing Script", cursive; pointer-events: none;
+    }
+    .sky-scene { transition: border-color .5s ease, box-shadow .5s ease; }
+    .sky-scene:focus-within, .sky-scene:hover { border-color: rgba(255,185,205,.34); box-shadow: inset 0 0 90px rgba(0,0,0,.25), 0 20px 70px rgba(255,70,120,.08); }
+    .closing { position: relative; overflow: hidden; }
+    .closing::before { content: ""; position: absolute; inset: 15% 10%; pointer-events: none; background: radial-gradient(ellipse, rgba(142,22,62,.13), transparent 67%); }
+    .closing > * { position: relative; }
+    .secret-card { position: relative; overflow: hidden; }
+    .secret-card::before { content: "✦"; position: absolute; top: 14px; left: 18px; color: rgba(255,215,173,.4); font-size: 16px; }
+    .back-to-top {
+      position: fixed; z-index: 15; right: 20px; bottom: 20px; display: flex; align-items: center; gap: 8px;
+      padding: 11px 14px; border: 1px solid rgba(255,220,230,.25); border-radius: 999px;
+      color: var(--cream); background: rgba(30,7,17,.72); backdrop-filter: blur(12px); cursor: pointer;
+      opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+      font-size: 12px;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-to-top:hover { border-color: rgba(255,185,205,.55); background: rgba(75,12,36,.9); }
+    .love-flash {
+      position: fixed; z-index: 55; inset: 0; pointer-events: none; opacity: 0;
+      background: radial-gradient(circle at var(--flash-x, 50%) var(--flash-y, 50%), rgba(255,125,164,.22), transparent 42%);
+      animation: loveFlash .9s ease-out forwards;
+    }
+    .sparkle-burst { text-shadow: 0 0 12px currentColor; }
+    @keyframes haloBreathe { 0%,100% { opacity: .55; transform: scale(.96); } 50% { opacity: 1; transform: scale(1.04); } }
+    @keyframes loveFlash { 0% { opacity: 0; } 18% { opacity: 1; } 100% { opacity: 0; } }
     @media (max-width: 700px) {
       .gallery { grid-template-columns: 1fr; max-width: 420px; margin: auto; gap: 25px; }
       .photo-card:nth-child(2) { margin-top: 0; }
@@ -353,28 +430,193 @@
       .secret-actions { flex-direction: column; align-items: stretch; }
       .secret-button { width: 100%; }
       .lightbox { padding: 16px; }
+      .back-to-top { right: 12px; bottom: 12px; padding: 10px 12px; }
+      .back-to-top span { display: none; }
+      .photo-card::after { opacity: .85; transform: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         scroll-behavior: auto !important; animation-duration: .01ms !important;
         animation-iteration-count: 1 !important; transition-duration: .01ms !important;
       }
+      .start-button::before, .secret-button::before { display: none; }
     }
 footer strong {
     font-family: "Dancing Script", cursive;
     font-size: 18px;
     font-weight: 600;
 }
+  
+
+    /* ===== Bản nâng cấp: điện ảnh, tinh tế, thân thiện với thiết bị ===== */
+    :root {
+      --glass: rgba(35, 7, 20, .64);
+      --rose-glow: rgba(255, 120, 151, .22);
+      --line-soft: rgba(255, 220, 230, .16);
+    }
+    html { scroll-padding-top: 5vh; }
+    body { isolation: isolate; }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 8; pointer-events: none;
+      opacity: .13; mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+    }
+    .background::after {
+      background: linear-gradient(180deg, rgba(15,3,9,.2), rgba(15,3,9,.48) 42%, rgba(15,3,9,.76));
+    }
+    .hero { min-height: 100svh; overflow: clip; }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero h1 { letter-spacing: -.035em; text-wrap: balance; }
+    .hero-copy { text-wrap: pretty; }
+    .hero::before {
+      width: min(76vw, 820px); opacity: .8;
+      background: radial-gradient(circle, rgba(255,91,139,.13), rgba(112,16,48,.07) 38%, transparent 70%);
+      animation: heroGlow 8s ease-in-out infinite alternate;
+    }
+    .section-inner { position: relative; }
+    section { position: relative; }
+    section:not(:first-of-type)::before {
+      content: ""; position: absolute; top: 0; left: 50%; width: min(520px, 65vw); height: 1px;
+      transform: translateX(-50%); background: linear-gradient(90deg, transparent, rgba(255,150,180,.24), transparent);
+    }
+    .section-label { letter-spacing: .28em; }
+    .rose-title { text-wrap: balance; text-shadow: 0 0 28px rgba(255,120,151,.1); }
+    .photo-card {
+      border-radius: 3px; box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.12);
+      will-change: transform;
+    }
+    .photo-card img { transition: filter .5s ease, transform .8s var(--ease); }
+    .photo-card:hover img, .photo-card:focus-visible img { filter: saturate(1.08) contrast(1.03); transform: scale(1.025); }
+    .photo-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
+    .photo-caption { font-family: "Dancing Script", cursive; font-size: clamp(1.05rem, 2vw, 1.35rem); }
+    .sky-scene {
+      border-color: rgba(255,190,211,.28);
+      box-shadow: inset 0 0 90px rgba(0,0,0,.38), 0 25px 90px rgba(0,0,0,.25), 0 0 50px rgba(255,105,150,.05);
+    }
+    .sky-scene::before {
+      content: ""; position: absolute; z-index: 0; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 45%, rgba(255,131,174,.08), transparent 55%);
+    }
+    #starCanvas { z-index: 1; cursor: crosshair; touch-action: pan-y; }
+    .sky-caption { z-index: 2; }
+    .sky-caption strong { text-shadow: 0 0 20px rgba(255,120,151,.55); }
+    .sky-toast {
+      position: absolute; z-index: 5; left: 50%; top: 22px; width: min(86%, 390px);
+      transform: translate(-50%, -8px); padding: 12px 17px; border: 1px solid rgba(255,210,225,.24);
+      border-radius: 999px; color: #fff0f5; background: rgba(20,5,15,.8); backdrop-filter: blur(12px);
+      box-shadow: 0 10px 35px rgba(0,0,0,.22); text-align: center; font-size: .9rem;
+      opacity: 0; visibility: hidden; transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+      pointer-events: none;
+    }
+    .sky-toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+    .letter-wrap {
+      position: relative; overflow: hidden; border-radius: 4px;
+      border-color: rgba(255,185,205,.3); background: linear-gradient(145deg, rgba(47,9,26,.82), rgba(22,5,15,.78));
+      box-shadow: 0 25px 90px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.04);
+    }
+    .letter-wrap::before {
+      content: "♡"; position: absolute; top: 10px; right: 18px; color: rgba(255,120,151,.14);
+      font: 5rem "Dancing Script", cursive; pointer-events: none;
+    }
+    .letter-wrap p { position: relative; }
+    .closing { padding-top: clamp(85px, 12vw, 150px); padding-bottom: clamp(65px, 10vw, 120px); }
+    .big-heart { font-size: clamp(3.5rem, 8vw, 5.4rem); filter: drop-shadow(0 0 25px rgba(255,87,126,.42)); }
+    .closing p { text-shadow: 0 0 38px rgba(255,120,151,.16); }
+    .secret-card {
+      border-radius: 8px; border-color: rgba(255,185,205,.3);
+      background: linear-gradient(145deg, rgba(49,8,26,.82), rgba(22,5,15,.82));
+      box-shadow: 0 30px 100px rgba(0,0,0,.28), 0 0 70px rgba(255,90,135,.045);
+    }
+    .secret-card.love-unlocked, body.love-unlocked .secret-card {
+      border-color: rgba(255,198,215,.72); box-shadow: 0 0 0 1px rgba(255,120,151,.1), 0 0 90px rgba(255,65,120,.16), 0 30px 100px rgba(0,0,0,.3);
+    }
+    .secret-button:focus-visible, .music-toggle:focus-visible, .back-to-top:focus-visible,
+    .start-button:focus-visible, .lightbox-close:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    .final-empty-space {
+      position: relative; display: grid; place-items: center; overflow: hidden;
+      height: clamp(480px, 78vh, 900px); min-height: 480px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(100,11,42,.26), transparent 60%);
+      isolation: isolate;
+    }
+    .finale-content { position: relative; z-index: 1; width: min(760px, calc(100% - 40px)); text-align: center; padding: 35px 0; }
+    .finale-kicker { color: #ffb6ca; font: 11px/1.8 Arial, sans-serif; letter-spacing: .32em; text-transform: uppercase; }
+    .finale-orbit {
+      position: relative; width: clamp(150px, 28vw, 230px); aspect-ratio: 1; margin: 0 auto 28px;
+      display: grid; place-items: center; border: 1px solid rgba(255,186,207,.23); border-radius: 50%;
+      box-shadow: 0 0 55px rgba(255,86,133,.09), inset 0 0 45px rgba(255,86,133,.05);
+    }
+    .finale-orbit::before, .finale-orbit::after { content: ""; position: absolute; inset: 12%; border: 1px solid rgba(255,186,207,.13); border-radius: 50%; transform: rotate(-25deg) scaleX(1.45); }
+    .finale-orbit::after { transform: rotate(55deg) scaleX(1.45); }
+    .finale-heart { color: #ff6f95; font-size: clamp(4rem, 10vw, 6.5rem); line-height: 1; text-shadow: 0 0 22px rgba(255,80,130,.6), 0 0 65px rgba(255,80,130,.28); animation: finaleBeat 2.2s ease-in-out infinite; }
+    .finale-title { margin: 0 auto 14px; font: clamp(2rem, 6vw, 3.8rem)/1.2 "Playfair Display", serif; font-weight: 400; text-wrap: balance; }
+    .finale-note { margin: 0 auto; max-width: 500px; color: var(--muted); line-height: 1.9; }
+    .finale-signature { margin-top: 24px; color: var(--rose); font: clamp(1.4rem, 4vw, 2rem) "Dancing Script", cursive; }
+    .finale-scroll { margin-top: 34px; color: rgba(255,220,230,.62); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
+    .shooting-star {
+      position: fixed; z-index: -1; width: 120px; height: 1px; pointer-events: none; opacity: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,229,239,.95), transparent);
+      filter: drop-shadow(0 0 5px rgba(255,165,194,.8)); transform: rotate(-28deg);
+      animation: shootingStar 1.25s ease-out forwards;
+    }
+    .constellation-line { stroke: rgba(255,203,222,.9); stroke-width: 1; fill: none; filter: drop-shadow(0 0 4px rgba(255,130,170,.8)); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; z-index: 2;
+      display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.09); color: white; font-size: 25px; cursor: pointer; backdrop-filter: blur(10px);
+    }
+    .lightbox-prev { left: clamp(8px, 3vw, 35px); }
+    .lightbox-next { right: clamp(8px, 3vw, 35px); }
+    .lightbox-nav:hover { background: rgba(255,120,151,.25); }
+    .gallery-count { margin: 22px auto 0; text-align: center; color: rgba(255,220,230,.65); font-size: .8rem; letter-spacing: .12em; }
+    .skip-link { position: fixed; z-index: 100; top: 8px; left: 8px; padding: 10px 14px; color: #240714; background: var(--cream); border-radius: 6px; transform: translateY(-160%); }
+    .skip-link:focus { transform: translateY(0); }
+    @keyframes heroGlow { from { transform: scale(.94); opacity: .55; } to { transform: scale(1.06); opacity: .95; } }
+    @keyframes finaleBeat { 0%,100% { transform: scale(1); } 18% { transform: scale(1.09); } 34% { transform: scale(1); } 48% { transform: scale(1.06); } }
+    @keyframes shootingStar { 0% { opacity: 0; transform: translate3d(0,0,0) rotate(-28deg); } 12% { opacity: 1; } 100% { opacity: 0; transform: translate3d(-42vw,32vh,0) rotate(-28deg); } }
+    @media (max-width: 700px) {
+      section { padding: 72px 18px; }
+      .hero { padding-inline: 20px; }
+      .gallery { gap: 13px; }
+      .photo-card { padding: 7px 7px 13px; }
+      .photo-caption { font-size: .98rem; line-height: 1.35; }
+      .sky-scene { height: min(116vw, 410px); border-radius: 14px; }
+      .sky-caption { bottom: 18px; }
+      .sky-caption strong { font-size: 1.55rem; }
+      .letter-wrap { padding: 27px 22px; }
+      .letter-wrap p { font-size: 1rem; line-height: 1.9; }
+      .final-empty-space { height: 72svh; min-height: 470px; }
+      .music-toggle { top: 12px; right: 12px; padding: 9px 12px; }
+      .lightbox { padding: 15px; }
+      .lightbox-nav { width: 40px; height: 40px; font-size: 21px; }
+    }
+    @media (max-width: 390px) {
+      .gallery { grid-template-columns: 1fr; gap: 22px; width: min(290px, 100%); margin: auto; }
+      .photo-card:nth-child(2) { margin-top: 0; }
+      .photo-card img { aspect-ratio: 4/4.5; }
+      .photo-caption { font-size: 1.15rem; }
+      .secret-actions { gap: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      .hero::before, .finale-heart, .finale-orbit, .envelope-scene { animation: none !important; }
+      .shooting-star { display: none !important; }
+      .photo-card, .photo-card img { will-change: auto; }
+    }
+
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#mainContent">Bỏ qua phần mở đầu, đến nội dung chính</a>
   <!-- Video nền: giữ tệp assets/background.mp4 -->
   <div class="background" aria-hidden="true">
     <video id="backgroundVideo" autoplay muted loop playsinline preload="metadata" poster="">
       <source src="assets/background.mp4" type="video/mp4">
     </video>
   </div>
+  <!-- Lớp sao điện ảnh phủ toàn màn hình -->
+  <canvas id="universeCanvas" aria-hidden="true"></canvas>
   <canvas id="heartCanvas" aria-hidden="true"></canvas>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"><span></span></div>
 
   <!-- Nhạc nền: giữ tệp assets/music.mp3 -->
   <audio id="backgroundMusic" src="assets/music.mp3" loop preload="none"></audio>
@@ -399,7 +641,7 @@ footer strong {
     </div>
   </div>
 
-  <main>
+  <main id="mainContent">
     <header class="hero">
       <div class="hero-inner">
         <div class="eyebrow">To my little piece of forever</div>
@@ -429,6 +671,7 @@ footer strong {
             <figcaption class="photo-caption">Chúng mình cùng cố gắng nhé ^^</figcaption>
           </figure>
         </div>
+        <p class="gallery-count" aria-live="polite">Còn rất nhiều điều đang chờ chúng mình phía trước</p>
       </div>
     </section>
 
@@ -438,7 +681,9 @@ footer strong {
         <h2 class="fade-in rose-title">Dưới cùng một bầu trời</h2>
         <p class="section-intro fade-in">Giữa vô vàn ánh sáng ngoài kia, có một điều khiến bầu trời của tớ trở nên đặc biệt hơn.</p>
         <div class="sky-scene fade-in" id="skyScene">
-          <canvas id="starCanvas" aria-label="Bầu trời sao tương tác. Chạm vào các ngôi sao để tạo ánh sáng."></canvas>
+          <canvas id="starCanvas" aria-label="Bầu trời sao tương tác. Chạm vào các ngôi sao để tạo ánh sáng và khám phá lời nhắn bí mật."></canvas>
+          <svg class="constellation-overlay" id="constellationOverlay" aria-hidden="true" viewBox="0 0 1000 480" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible"></svg>
+          <div class="sky-toast" id="skyToast" role="status" aria-live="polite"></div>
           <div class="sky-caption">
             <strong>Somewhere, it's always you.</strong>
             <span>Chạm nhẹ để những vì sao thức giấc ♡</span>
@@ -481,11 +726,17 @@ footer strong {
       </div>
     </section>
   </main>
-  <!-- Khoảng trời cuối trang: chỉ có video nền và trái tim rơi -->
-  <div class="final-empty-space" aria-hidden="true"></div>
+  <!-- Khoảng trời cuối trang được biến thành cảnh kết điện ảnh; nội dung riêng phía trên vẫn giữ nguyên. -->
+  <section class="final-empty-space" id="finale" aria-label="Một lời nhắn cuối dành cho cậu">
+    <div class="finale-content">
+      <div class="finale-orbit" aria-hidden="true"><span class="finale-heart">♥</span></div>
+  </section>
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Trở về đầu trang">↑ <span>Về đầu trang</span></button>
   <footer><strong>To the world you may be one person, but to me you are the world. ♡</strong></footer>
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Ảnh kỷ niệm phóng to" aria-hidden="true">
     <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Đóng ảnh">×</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Xem ảnh trước">‹</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Xem ảnh tiếp theo">›</button>
     <div class="lightbox-content">
       <img id="lightboxImage" src="" alt="">
       <div class="lightbox-caption" id="lightboxCaption"></div>
@@ -557,6 +808,27 @@ footer strong {
       $("#memoriesButton").addEventListener("click", () => {
         $("#memories").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
       });
+
+      // Thanh tiến trình cuộn và nút trở về đầu trang.
+      const progressBar = $("#scrollProgress span");
+      const backToTop = $("#backToTop");
+      let scrollTicking = false;
+      function updateScrollUI() {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+        progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+        backToTop.classList.toggle("visible", window.scrollY > window.innerHeight * .7);
+        scrollTicking = false;
+      }
+      window.addEventListener("scroll", () => {
+        if (!scrollTicking) {
+          scrollTicking = true;
+          window.requestAnimationFrame(updateScrollUI);
+        }
+      }, { passive: true });
+      window.addEventListener("resize", updateScrollUI, { passive: true });
+      backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }));
+      updateScrollUI();
 
       // Hiện nội dung khi cuộn đến; bỏ qua observer nếu trình duyệt không hỗ trợ.
       const revealItems = $$(".fade-in");
@@ -818,13 +1090,102 @@ footer strong {
       resizeStarCanvas();
       startStarAnimation();
 
+      // Bầu trời sao phủ toàn màn hình: ánh sao phản hồi theo con trỏ/chạm.
+      const universeCanvas = $("#universeCanvas");
+      const universeCtx = universeCanvas.getContext("2d", { alpha: true });
+      let universeWidth = 0, universeHeight = 0, universeStars = [], universeFrame = 0;
+      let universePointer = { x: -1000, y: -1000, active: false };
+      let lastUniverseFrame = 0;
+      function resizeUniverse() {
+        const ratio = Math.min(window.devicePixelRatio || 1, isSmallScreen ? 1.25 : 1.6);
+        universeWidth = window.innerWidth;
+        universeHeight = window.innerHeight;
+        universeCanvas.width = Math.round(universeWidth * ratio);
+        universeCanvas.height = Math.round(universeHeight * ratio);
+        universeCanvas.style.width = universeWidth + "px";
+        universeCanvas.style.height = universeHeight + "px";
+        universeCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const count = reduceMotion ? 55 : Math.min(isSmallScreen ? 85 : 145, Math.floor(universeWidth * universeHeight / 10500));
+        universeStars = Array.from({ length: count }, () => ({
+          x: Math.random() * universeWidth, y: Math.random() * universeHeight,
+          r: .35 + Math.random() * 1.15, a: .12 + Math.random() * .48,
+          phase: Math.random() * Math.PI * 2, speed: .003 + Math.random() * .008
+        }));
+        drawUniverse(performance.now(), true);
+      }
+      function drawUniverse(now, staticOnly = false) {
+        universeCtx.clearRect(0, 0, universeWidth, universeHeight);
+        universeStars.forEach(star => {
+          if (!staticOnly) star.phase += star.speed;
+          const pulse = staticOnly ? 1 : .58 + .42 * Math.sin(star.phase);
+          const dx = star.x - universePointer.x, dy = star.y - universePointer.y;
+          const distance = Math.hypot(dx, dy);
+          const near = universePointer.active && distance < 115;
+          const strength = near ? 1 - distance / 115 : 0;
+          const radius = star.r * pulse + strength * 1.5;
+          universeCtx.beginPath();
+          universeCtx.arc(star.x, star.y, radius, 0, Math.PI * 2);
+          universeCtx.fillStyle = `rgba(255, ${Math.round(192 + pulse * 48)}, ${Math.round(218 + pulse * 30)}, ${Math.min(.95, star.a * pulse + strength * .42)})`;
+          universeCtx.fill();
+          if (near && strength > .15) {
+            universeCtx.beginPath();
+            universeCtx.moveTo(star.x, star.y);
+            universeCtx.lineTo(universePointer.x, universePointer.y);
+            universeCtx.strokeStyle = `rgba(255,151,188,${strength * .12})`;
+            universeCtx.lineWidth = .6;
+            universeCtx.stroke();
+          }
+        });
+      }
+      function animateUniverse(now) {
+        universeFrame = 0;
+        if (document.hidden || reduceMotion) return;
+        if (now - lastUniverseFrame < 34) { universeFrame = requestAnimationFrame(animateUniverse); return; }
+        lastUniverseFrame = now;
+        drawUniverse(now);
+        universeFrame = requestAnimationFrame(animateUniverse);
+      }
+      function startUniverse() {
+        if (!reduceMotion && !document.hidden && !universeFrame) universeFrame = requestAnimationFrame(animateUniverse);
+      }
+      function stopUniverse() {
+        if (universeFrame) cancelAnimationFrame(universeFrame);
+        universeFrame = 0;
+      }
+      window.addEventListener("pointermove", event => {
+        universePointer.x = event.clientX;
+        universePointer.y = event.clientY;
+        universePointer.active = true;
+        if (reduceMotion) drawUniverse(performance.now(), true);
+      }, { passive: true });
+      window.addEventListener("pointerdown", event => {
+        universePointer.x = event.clientX;
+        universePointer.y = event.clientY;
+        universePointer.active = true;
+        if (!reduceMotion) createSparkles(event.clientX, event.clientY, isSmallScreen ? 5 : 9);
+        const flash = document.createElement("span");
+        flash.className = "love-flash";
+        flash.style.setProperty("--flash-x", event.clientX + "px");
+        flash.style.setProperty("--flash-y", event.clientY + "px");
+        document.body.appendChild(flash);
+        flash.addEventListener("animationend", () => flash.remove(), { once: true });
+      }, { passive: true });
+      window.addEventListener("pointerout", event => {
+        if (!event.relatedTarget) universePointer.active = false;
+      }, { passive: true });
+      window.addEventListener("resize", resizeUniverse, { passive: true });
+      resizeUniverse();
+      startUniverse();
+
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
           stopHeartAnimation();
           stopStarAnimation();
+          stopUniverse();
         } else {
           startHeartAnimation();
           startStarAnimation();
+          startUniverse();
           if (reduceMotion) drawStars(performance.now(), true);
         }
       });
@@ -846,13 +1207,25 @@ footer strong {
           particle.addEventListener("animationend", () => particle.remove(), { once: true });
         }
       }
-      function respondToSecret(message, button) {
-        $("#secretReply").textContent = message;
+      function respondToSecret(message, button, celebrate = false) {
+        const reply = $("#secretReply");
+        reply.textContent = message;
+        reply.animate([{ opacity: 0, transform: "translateY(10px) scale(.98)" }, { opacity: 1, transform: "translateY(0) scale(1)" }], {
+          duration: reduceMotion ? 1 : 650, easing: "cubic-bezier(.22, 1, .36, 1)"
+        });
         const rect = button.getBoundingClientRect();
-        createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, isSmallScreen ? 10 : 22);
+        createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, celebrate ? (isSmallScreen ? 24 : 48) : (isSmallScreen ? 10 : 22));
+        if (celebrate) {
+          document.body.classList.add("love-unlocked");
+          if (!reduceMotion) {
+            for (let i = 0; i < (isSmallScreen ? 3 : 6); i++) {
+              window.setTimeout(() => createSparkles(Math.random() * window.innerWidth, Math.random() * window.innerHeight * .8, 12), i * 170);
+            }
+          }
+        }
       }
       $("#yesButton").addEventListener("click", event => {
-        respondToSecret("Vậy từ hôm nay, mình cùng viết tiếp nhé. Tớ thương cậu ♡", event.currentTarget);
+        respondToSecret("Vậy từ hôm nay, mình cùng viết tiếp nhé. Tớ thương cậu ♡", event.currentTarget, true);
       });
       $("#hugButton").addEventListener("click", event => {
         respondToSecret("Lại đây, tớ ôm cậu thật lâu nhé 🫂♡", event.currentTarget);
@@ -871,5 +1244,145 @@ footer strong {
       });
     })();
   </script>
+
+  <script>
+    (() => {
+      "use strict";
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const small = window.matchMedia("(max-width: 700px)").matches;
+      const $ = (s, root = document) => root.querySelector(s);
+      const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+
+      // Chuyển tiêu điểm ra nội dung chính sau khi phong bì khép lại.
+      const intro = $("#startOverlay");
+      const introButton = $("#startButton");
+      const heroTitle = $(".hero h1");
+      if (heroTitle) heroTitle.setAttribute("tabindex", "-1");
+      if (introButton && heroTitle) introButton.addEventListener("click", () => {
+        window.setTimeout(() => { if (intro && intro.classList.contains("hidden")) heroTitle.focus({ preventScroll: true }); }, reduced ? 120 : 1150);
+      });
+
+      // Bầu trời sao: tạo chòm sao ngắn, sao băng và lời nhắn nhỏ khi chạm.
+      const sky = $("#skyScene"), canvas = $("#starCanvas"), overlay = $("#constellationOverlay"), toast = $("#skyToast");
+      const secretNotes = [
+        "Nếu biết sẽ có ngày yêu cậu nhiều đến vậy, tớ nhất định đã yêu cậu ngay từ cái nhìn đầu tiên. ♡",
+        "Cậu là điều dịu dàng tớ muốn giữ gìn.",
+        "Mong chúng mình cùng lớn lên, nhưng vẫn thương nhau như thế.",
+        "Giữa rất nhiều vì sao, tớ nhận ra ánh sáng của cậu.",
+        "Một ngày bình thường có cậu cũng đủ thành kỷ niệm.",
+        "Chạm thêm một vì sao, gửi cậu thêm một cái ôm. 🫂"
+      ];
+      let noteIndex = 0, toastTimer = 0, lastSkyTouch = 0;
+      function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add("show");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove("show"), 2900);
+      }
+      function drawConstellation(x, y) {
+        if (!sky || !overlay || reduced) return;
+        const rect = sky.getBoundingClientRect();
+        const w = rect.width, h = rect.height;
+        const points = [
+          [x, y], [Math.max(14, Math.min(w - 14, x + (Math.random() * .22 - .11) * w)), Math.max(16, y - h * (.08 + Math.random() * .13))],
+          [Math.max(14, Math.min(w - 14, x + (Math.random() * .3 - .15) * w)), Math.max(16, y + h * (.07 + Math.random() * .12))]
+        ];
+        overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
+        overlay.replaceChildren();
+        const ns = "http://www.w3.org/2000/svg";
+        [[0,1],[0,2],[1,2]].forEach(([a,b], i) => {
+          const line = document.createElementNS(ns, "line");
+          line.setAttribute("x1", points[a][0]); line.setAttribute("y1", points[a][1]);
+          line.setAttribute("x2", points[b][0]); line.setAttribute("y2", points[b][1]);
+          line.setAttribute("class", "constellation-line");
+          line.style.opacity = String(.85 - i * .15); overlay.appendChild(line);
+        });
+        points.forEach(([px,py], i) => {
+          const c = document.createElementNS(ns, "circle");
+          c.setAttribute("cx", px); c.setAttribute("cy", py); c.setAttribute("r", i === 0 ? "3.2" : "2.2");
+          c.setAttribute("fill", "#ffe6ef"); c.style.filter = "drop-shadow(0 0 5px #ff8eaf)"; overlay.appendChild(c);
+        });
+        window.setTimeout(() => { if (overlay) overlay.replaceChildren(); }, 2100);
+      }
+      if (canvas && sky) {
+        canvas.addEventListener("pointerdown", event => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+          const rect = sky.getBoundingClientRect();
+          const x = event.clientX - rect.left, y = event.clientY - rect.top;
+          drawConstellation(x, y);
+          showToast(secretNotes[noteIndex % secretNotes.length]);
+          noteIndex++;
+          lastSkyTouch = Date.now();
+        }, { passive: true });
+        canvas.setAttribute("role", "img");
+        canvas.setAttribute("aria-describedby", "skyToast");
+      }
+      function shootingStar() {
+        if (reduced || document.hidden || !document.body.classList.contains("love-unlocked")) return;
+        const star = document.createElement("span");
+        star.className = "shooting-star";
+        star.style.left = (25 + Math.random() * 85) + "vw";
+        star.style.top = (Math.random() * 55) + "vh";
+        document.body.appendChild(star);
+        star.addEventListener("animationend", () => star.remove(), { once: true });
+      }
+      // Một lần bấm đồng ý sẽ mở thêm lớp cao trào, nhưng không tự phát nhạc hay gây giật màn hình.
+      const yes = $("#yesButton"), secretCard = $(".secret-card"), finale = $("#finale");
+      if (yes) yes.addEventListener("click", () => {
+        if (secretCard) secretCard.classList.add("love-unlocked");
+        if (finale) finale.classList.add("finale-awakened");
+        if (!reduced) {
+          for (let i = 0; i < (small ? 2 : 4); i++) window.setTimeout(shootingStar, i * 260);
+        }
+      });
+
+      // Hộp ảnh: thêm nút tiến/lùi và phím mũi tên; giữ nguyên ảnh, chú thích và đường dẫn gốc.
+      const cards = $$(".photo-card"), lightbox = $("#lightbox"), image = $("#lightboxImage"), caption = $("#lightboxCaption");
+      let activePhoto = 0;
+      function findActivePhoto() {
+        const src = image ? image.getAttribute("src") : "";
+        const found = cards.findIndex(card => { const img = $("img", card); return img && (img.getAttribute("src") === src || img.src === src); });
+        if (found >= 0) activePhoto = found;
+      }
+      function movePhoto(delta) {
+        if (!cards.length || !image || !caption) return;
+        findActivePhoto(); activePhoto = (activePhoto + delta + cards.length) % cards.length;
+        const card = cards[activePhoto], img = $("img", card), cap = $("figcaption", card);
+        image.src = img.currentSrc || img.src; image.alt = img.alt || "";
+        caption.textContent = cap ? cap.textContent : "";
+        const count = $(".gallery-count");
+        if (count) count.textContent = `${String(activePhoto + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")} khoảnh khắc · còn rất nhiều điều đang chờ chúng mình`;
+      }
+      const prev = $("#lightboxPrev"), next = $("#lightboxNext");
+      if (prev) prev.addEventListener("click", () => movePhoto(-1));
+      if (next) next.addEventListener("click", () => movePhoto(1));
+      document.addEventListener("keydown", event => {
+        if (!lightbox || !lightbox.classList.contains("open")) return;
+        if (event.key === "ArrowLeft") { event.preventDefault(); movePhoto(-1); }
+        if (event.key === "ArrowRight") { event.preventDefault(); movePhoto(1); }
+        if (event.key === "Tab") {
+          const controls = [$("#lightboxClose"), prev, next].filter(Boolean);
+          if (!controls.length) return;
+          const first = controls[0], last = controls[controls.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        }
+      });
+
+      // Giảm việc chạy hiệu ứng khi tab nền/thiết bị tiết kiệm pin.
+      let lastViewportWidth = window.innerWidth;
+      window.addEventListener("resize", () => {
+        if (Math.abs(window.innerWidth - lastViewportWidth) > 120) {
+          lastViewportWidth = window.innerWidth;
+          if (overlay) overlay.replaceChildren();
+        }
+      }, { passive: true });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && overlay) overlay.replaceChildren();
+      });
+    })();
+  </script>
+
 </body>
 </html>
